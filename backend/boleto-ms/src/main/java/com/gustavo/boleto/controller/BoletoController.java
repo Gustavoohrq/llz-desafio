@@ -1,5 +1,6 @@
 package com.gustavo.boleto.controller;
 
+import com.gustavo.boleto.dto.CriarBoletoDto;
 import com.gustavo.boleto.entity.Boleto;
 import com.gustavo.boleto.service.BoletoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class BoletoController {
     private BoletoService boletoService;
 
     @PostMapping
-    public ResponseEntity<Boleto> criarBoleto(@Valid @RequestBody Boleto boleto) {
+    public ResponseEntity<Boleto> criarBoleto(@Valid @RequestBody CriarBoletoDto boleto) {
         return new ResponseEntity<>(boletoService.criarBoleto(boleto), HttpStatus.CREATED);
     }
 

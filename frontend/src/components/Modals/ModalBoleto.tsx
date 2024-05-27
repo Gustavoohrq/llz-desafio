@@ -60,7 +60,6 @@ export default function ModalBoleto({ isOpen, setModalOpen, title, boleto, delet
             reset();
             setModalOpen(false);
         } catch (error: any) {
-            setModalOpen(false);
             setAlert([error?.response?.data?.message || 'Erro ao criar boleto', 'error']);
         }
     };
@@ -73,7 +72,6 @@ export default function ModalBoleto({ isOpen, setModalOpen, title, boleto, delet
             setModalOpen(false);
             reset();
         } catch (error: any) {
-            setModalOpen(false);
             setAlert([error?.response?.data?.message || 'Erro ao alterar informações do boleto.', 'error']);
         }
     };
@@ -86,7 +84,6 @@ export default function ModalBoleto({ isOpen, setModalOpen, title, boleto, delet
             setModalOpen(false);
             reset();
         } catch (error: any) {
-            setModalOpen(false);
             setAlert([error?.response?.data?.message || 'Erro ao excluir boleto.', 'error']);
         }
     };
@@ -135,38 +132,30 @@ export default function ModalBoleto({ isOpen, setModalOpen, title, boleto, delet
                                     </div>
                                     <form className="p-4 md:p-5" onSubmit={handleSubmit(onSubmit)}>
                                         <div className="grid gap-4 mb-4 grid-cols-2">
-                                            <div className="col-span-2">
+                                            <div className="col-span-2" hidden={!!boleto && !detailsModal}>
                                                 <label htmlFor="pessoaId" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pessoa ID</label>
                                                 <input type="text" {...register('pessoaId', { required: 'Pessoa ID é obrigatório' })} id="pessoaId" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" disabled={detailsModal || !!boleto} />
                                                 {errors.pessoaId && <p className="text-red-500 text-xs mt-1">{errors.pessoaId.message}</p>}
                                             </div>
-                                            <div className="col-span-2">
+                                            <div className="col-span-2" hidden={!!boleto && !detailsModal}>
                                                 <label htmlFor="valor" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Valor</label>
                                                 <input type="number" step="0.01" {...register('valor', { required: 'Valor é obrigatório', min: { value: 0, message: 'Valor deve ser positivo' } })} id="valor" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" disabled={detailsModal || !!boleto} />
                                                 {errors.valor && <p className="text-red-500 text-xs mt-1">{errors.valor.message}</p>}
                                             </div>
-                                            <div className="col-span-2">
+                                            <div className="col-span-2" hidden={!boleto} >
                                                 <label htmlFor="valorPago" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Valor Pago</label>
                                                 <input type="number" step="0.01" {...register('valorPago')} id="valorPago" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" disabled={detailsModal} />
                                             </div>
-                                            <div className="col-span-2">
+                                            <div className="col-span-2" hidden={!!boleto && !detailsModal}>
                                                 <label htmlFor="dataVencimento" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Data de Vencimento</label>
                                                 <input type="date" {...register('dataVencimento', { required: 'Data de vencimento é obrigatória' })} id="dataVencimento" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" disabled={detailsModal || !!boleto} />
                                                 {errors.dataVencimento && <p className="text-red-500 text-xs mt-1">{errors.dataVencimento.message}</p>}
                                             </div>
-                                            <div className="col-span-2">
+                                            <div className="col-span-2" hidden={!boleto}>
                                                 <label htmlFor="dataPagamento" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Data de Pagamento</label>
                                                 <input type="date" {...register('dataPagamento')} id="dataPagamento" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" disabled={detailsModal} />
                                             </div>
-                                            <div className="col-span-2">
-                                                <label htmlFor="status" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Status</label>
-                                                <select id="status" {...register('status', { required: 'Status é obrigatório' })} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" disabled={detailsModal || !!boleto}>
-                                                    <option value="pendente">Pendente</option>
-                                                    <option value="pago">Pago</option>
-                                                    <option value="vencido">Vencido</option>
-                                                </select>
-                                                {errors.status && <p className="text-red-500 text-xs mt-1">{errors.status.message}</p>}
-                                            </div>
+
 
                                         </div>
                                         {!detailsModal ? (

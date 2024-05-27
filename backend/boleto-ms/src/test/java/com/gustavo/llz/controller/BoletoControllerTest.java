@@ -1,6 +1,7 @@
 package com.gustavo.llz.controller;
 
 import com.gustavo.boleto.controller.BoletoController;
+import com.gustavo.boleto.dto.CriarBoletoDto;
 import com.gustavo.boleto.entity.Boleto;
 import com.gustavo.boleto.service.BoletoService;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,14 +35,15 @@ public class BoletoControllerTest {
 
     @Test
     public void testCriarBoleto() {
+        CriarBoletoDto boletoDto = new CriarBoletoDto();
         Boleto boleto = new Boleto();
-        when(boletoService.criarBoleto(boleto)).thenReturn(boleto);
+        when(boletoService.criarBoleto(boletoDto)).thenReturn(boleto);
 
-        ResponseEntity<Boleto> response = boletoController.criarBoleto(boleto);
+        ResponseEntity<Boleto> response = boletoController.criarBoleto(boletoDto);
 
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertEquals(boleto, response.getBody());
-        verify(boletoService, times(1)).criarBoleto(boleto);
+        verify(boletoService, times(1)).criarBoleto(boletoDto);
     }
 
     @Test

@@ -1,5 +1,6 @@
 package com.gustavo.boleto.service;
 
+import com.gustavo.boleto.dto.CriarBoletoDto;
 import com.gustavo.boleto.entity.Boleto;
 import com.gustavo.boleto.exception.BusinessException;
 import com.gustavo.boleto.exception.ResourceIsExistException;
@@ -20,7 +21,12 @@ public class BoletoService {
     @Autowired
     private BoletoRepository boletoRepository;
 
-    public Boleto criarBoleto(Boleto boleto) {
+    public Boleto criarBoleto(CriarBoletoDto body) {
+        Boleto boleto = new Boleto();
+        boleto.setPessoaId(body.getPessoaId());
+        boleto.setValor(body.getValor());
+        boleto.setDataVencimento(body.getDataVencimento());
+        boleto.setStatus("Pendente");
         return boletoRepository.save(boleto);
     }
 

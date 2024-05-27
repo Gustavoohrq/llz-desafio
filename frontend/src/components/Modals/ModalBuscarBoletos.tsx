@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { boletoAPI } from '../../services/boleto';
 import Alert from '../Alert';
+import moment from 'moment';
 
 interface ModalBuscarBoletosProps {
   isOpen: boolean;
@@ -18,7 +19,6 @@ const ModalBuscarBoletos: React.FC<ModalBuscarBoletosProps> = ({ isOpen, setModa
       setAlert(null);
       const response = await api.get(`boleto/pessoa/${pessoaId}`);
       setBoletos(response.data);
-      console.log(response.data)
     } catch (error: any) {
       setAlert([error?.response?.data?.message || 'Erro ao buscar boletos', 'error']);
     }
@@ -53,7 +53,7 @@ const ModalBuscarBoletos: React.FC<ModalBuscarBoletosProps> = ({ isOpen, setModa
                   <div>ID: {boleto.id}</div>
                   <div>Valor: {boleto.valor}</div>
                   <div>Status: {boleto.status}</div>
-                  <div>Data de Vencimento: {boleto.dataVencimento}</div>
+                  <div>Data de Vencimento: {moment(boleto.dataVencimento, 'YYYY-MM-DD').format('DD/MM/YYYY')}</div>
                 </li>
               ))}
             </ul>

@@ -4,6 +4,7 @@ import { pessoaAPI } from "../services/pessoa";
 import { MagnifyingGlassCircleIcon, PencilIcon, TrashIcon } from "@heroicons/react/16/solid";
 import ModalPessoa from "../components/Modals/ModalPessoa";
 import ModalBuscarBoletos from "../components/Modals/ModalBuscarBoletos";
+import moment from "moment";
 
 const Pessoa = () => {
     const [pessoas, setPessoas] = useState([]);
@@ -17,7 +18,7 @@ const Pessoa = () => {
 
     useEffect(() => {
         api.get('/pessoa')
-            .then(response => { console.log(response.data); setPessoas(response.data); })
+            .then(response => {  setPessoas(response.data); })
             .catch(error => console.error('Error ao buscar pessoas:', error));
         setTimeout(() => {
             setLoading(false)
@@ -59,7 +60,7 @@ const Pessoa = () => {
                                 <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{pessoa.nome}</th>
                                     <td className="px-6 py-4">{pessoa.cpf}</td>
-                                    <td className="px-6 py-4">{pessoa.dataNascimento}</td>
+                                    <td className="px-6 py-4">{moment(pessoa.dataNascimento, 'YYYY-MM-DD').format('DD/MM/YYYY')}</td>
                                     <td className="px-6 py-4 text-right">
                                         <MagnifyingGlassCircleIcon onClick={() => handleOpenBoletoModal(pessoa.id)} width={24} height={24} title="Pesquisar boletos" className="cursor-pointer text-blue-500 hover:text-blue-700" />
 

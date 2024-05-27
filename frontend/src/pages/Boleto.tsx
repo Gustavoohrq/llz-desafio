@@ -4,6 +4,7 @@ import ModalBoleto from "../components/Modals/ModalBoleto";
 import Loading from "../components/Loading";
 import { EyeIcon, PencilIcon, TrashIcon } from "@heroicons/react/16/solid";
 import BoletoIcon from "../assets/BoletoIcon.png"
+import moment from "moment";
 
 const Boleto = () => {
   const [boletos, setBoletos] = useState([]);
@@ -16,7 +17,7 @@ const Boleto = () => {
 
   useEffect(() => {
     api.get('/boleto')
-      .then(response => { console.log(response.data); setBoletos(response.data); })
+      .then(response => {  setBoletos(response.data); })
       .catch(error => console.error('Error ao buscar boletos:', error));
     setTimeout(() => {
       setLoading(false)
@@ -60,8 +61,8 @@ const Boleto = () => {
               {boletos.map((boleto: Boleto, index) => (
                 <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                   <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{boleto.pessoaId}</th>
-                  <td className="px-6 py-4">{boleto.valor}</td>
-                  <td className="px-6 py-4">{boleto.dataVencimento}</td>
+                  <td className="px-6 py-4">R$ {boleto.valor}</td>
+                  <td className="px-6 py-4">{moment(boleto.dataVencimento, 'YYYY-MM-DD').format('DD/MM/YYYY')}</td>
                   <td className="px-6 py-4">{boleto.status.toUpperCase()}</td>
                   <td className="px-6 py-4 text-right">
                     <EyeIcon
