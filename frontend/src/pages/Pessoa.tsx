@@ -22,7 +22,7 @@ const Pessoa = () => {
         setTimeout(() => {
             setLoading(false)
         }, 1000);
-    }, []);
+    }, [openModal]);
     const handleOpenBoletoModal = (pessoaId: string) => {
         setSelectedPessoaId(pessoaId);
         setBoletoModal(true);

@@ -21,7 +21,7 @@ const Boleto = () => {
     setTimeout(() => {
       setLoading(false)
     }, 1000);
-  }, []);
+  }, [openModal]);
 
   return (
     <div className="my-14 mx-20">
