@@ -17,7 +17,7 @@ const Boleto = () => {
 
   useEffect(() => {
     api.get('/boleto')
-      .then(response => {  setBoletos(response.data); })
+      .then(response => { setBoletos(response.data); })
       .catch(error => console.error('Error ao buscar boletos:', error));
     setTimeout(() => {
       setLoading(false)
@@ -73,8 +73,10 @@ const Boleto = () => {
                       onClick={() => { setOpenModal(true); setPessoa(boleto); setDeleteModal(false); setDetailsModal(true); }}
                     />
                   </td>
+
                   <td className="px-6 py-4 text-right">
-                    <img src={BoletoIcon} onClick={() => { setOpenModal(true); setPessoa(boleto); setDeleteModal(false); setDetailsModal(false); }} width={30} height={30} title="Pagar boleto" className="cursor-pointer text-blue-500 hover:text-blue-700" />
+
+                    {boleto.status.toUpperCase() != "PAGO" ? <img src={BoletoIcon} onClick={() => { setOpenModal(true); setPessoa(boleto); setDeleteModal(false); setDetailsModal(false); }} width={30} height={30} title="Pagar boleto" className="cursor-pointer text-blue-500 hover:text-blue-700" /> : null}
                   </td>
                   <td className="px-6 py-4 text-right">
                     <TrashIcon onClick={() => { setOpenModal(true); setPessoa(boleto); setDeleteModal(true); setDetailsModal(false); }} width={24} height={24} title="Remover boleto" className="cursor-pointer text-red-500 hover:text-red-700" />
